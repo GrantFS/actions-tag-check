@@ -19,4 +19,4 @@ runs:
     - name: Tag Check
       id: tag-check
       shell: bash
-      run: git show-ref --tags --verify --quiet -- "refs/tags/${{ steps.package-version.outputs.result }}" && echo "tagged=0" >> $GITHUB_OUTPUT || echo "tagged=1" >> $GITHUB_OUTPUT
+      run: git show-ref --tags --verify --quiet -- "refs/tags/${{ steps.package-version.outputs.result }}" && echo "tagged=1" >> $GITHUB_OUTPUT || echo "tagged=0" >> $GITHUB_OUTPUT
