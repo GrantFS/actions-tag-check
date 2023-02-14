@@ -1,0 +1,22 @@
+name: Tag Check
+description: "Check for current release tag"
+
+outputs:
+  tagged:
+    description: "Already has current release tagged"
+    value: ${{ steps.tag-check.outputs.tagged }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Package Version
+      id: package-version
+      uses: actions/github-script@v6
+      with:
+        result-encoding: string
+        script: return require('./package.json').version
+
+    - name: Tag Check
+      id: tag-check
+      shell: bash
+      run: git show-ref --tags --verify --quiet -- "refs/tags/${{ steps.package-version.outputs.result }}" && echo "tagged=0" >> $GITHUB_OUTPUT || echo "tagged=1" >> $GITHUB_OUTPUT
